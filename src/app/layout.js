@@ -1,5 +1,6 @@
 import './globals.css';
 import { LanguageProvider } from '@/lib/language-context';
+import { AuthProvider } from '@/lib/auth-context';
 import ClientLayout from '@/components/ClientLayout';
 
 export const metadata = {
@@ -20,9 +21,11 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
-        <LanguageProvider>
-          <ClientLayout>{children}</ClientLayout>
-        </LanguageProvider>
+        <AuthProvider>
+          <LanguageProvider>
+            <ClientLayout>{children}</ClientLayout>
+          </LanguageProvider>
+        </AuthProvider>
       </body>
     </html>
   );

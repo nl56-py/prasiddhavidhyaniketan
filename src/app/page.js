@@ -4,54 +4,69 @@ import { useLanguage } from '@/lib/language-context';
 import { content, t } from '@/lib/content';
 import { useScrollReveal } from '@/lib/useScrollReveal';
 
+const facilityImages = [
+  { key: 0, img: '/images/facility-classroom.png' },
+  { key: 1, img: '/images/facility-montessori.png' },
+  { key: 2, img: '/images/facility-drinking-water.png' },
+  { key: 3, img: '/images/facility-playground.png' },
+  { key: 4, img: '/images/facility-school-bus.png' },
+  { key: 5, img: '/images/facility-caring-staff.png' },
+  { key: 6, img: '/images/facility-evaluation.png' },
+  { key: 7, img: '/images/facility-discipline.png' },
+];
+
+const programImages = [
+  '/images/nursery-montessori.png',
+  '/images/primary-level.png',
+  '/images/middle-level.png',
+];
+
 export default function HomePage() {
   const { lang } = useLanguage();
   const ref = useScrollReveal();
   const c = content.home;
+  const mc = content.managerMessage;
 
   return (
     <div ref={ref}>
-      {/* ===== HERO ===== */}
-      <section className="section" style={{ background: 'var(--color-bg)', padding: 'var(--space-12) 0' }}>
-        <div className="container">
-          <div className="hero-split">
-            <div className="hero-split__content reveal reveal--left">
-              <span className="hero__eyebrow">🏫 {t(c.hero.eyebrow, lang)}</span>
-              <h1 className="hero-split__title">
+      {/* ===== HERO WITH BACKGROUND IMAGE ===== */}
+      <section className="hero-bg-section" id="hero-section">
+        <div className="hero-bg-section__media">
+          <img
+            src="/images/hero-background.png"
+            alt="Prasiddha Vidhya Niketan School"
+            className="hero-bg-section__img"
+          />
+        </div>
+        <div className="hero-bg-section__overlay" />
+        <div className="hero-bg-section__content">
+          <div className="container">
+            <div className="hero-bg-section__inner">
+              <span className="hero__eyebrow" style={{ background: 'rgba(245,197,66,0.15)', border: '1px solid rgba(245,197,66,0.3)', color: 'var(--color-accent)' }}>
+                🏫 {t(c.hero.eyebrow, lang)}
+              </span>
+              <h1 className="hero-bg-section__title">
                 {lang === 'np' ? 'नानीबाबुको उज्ज्वल भविष्यका लागि ' : 'Nurturing Young Minds for a '}
-                <span className="accent">{lang === 'np' ? 'संस्कारयुक्त शिक्षा' : 'Brighter Future'}</span>
+                <span className="hero-bg-section__accent">{lang === 'np' ? 'संस्कारयुक्त शिक्षा' : 'Brighter Future'}</span>
               </h1>
-              <p className="hero-split__subtitle">{t(c.hero.subtitle, lang)}. {t(c.hero.description, lang)}</p>
-              <div className="hero__actions" style={{ marginBottom: 'var(--space-8)', display: 'flex', gap: 'var(--space-4)', flexWrap: 'wrap' }}>
-                <Link href="/admissions" className="btn btn--primary btn--lg">{t(c.hero.primaryCTA, lang)}</Link>
-                <Link href="/about" className="btn btn--secondary btn--lg">{t(c.hero.secondaryCTA, lang)}</Link>
+              <p className="hero-bg-section__subtitle">{t(c.hero.subtitle, lang)}</p>
+              <p className="hero-bg-section__desc">{t(c.hero.description, lang)}</p>
+              <div className="hero-bg-section__actions">
+                <Link href="/admissions" className="btn btn--secondary btn--lg">{t(c.hero.primaryCTA, lang)}</Link>
+                <Link href="/about" className="btn hero-bg-section__btn-outline">{t(c.hero.secondaryCTA, lang)}</Link>
               </div>
-              <div className="hero-split__features">
-                <div className="hero-split__feature-badge">
-                  <span className="hero-split__feature-icon">🛡️</span>
+              <div className="hero-bg-section__badges">
+                <div className="hero-bg-section__badge">
+                  <span className="hero-bg-section__badge-icon">🛡️</span>
                   {lang === 'np' ? 'सुरक्षित वातावरण' : 'Safe Campus'}
                 </div>
-                <div className="hero-split__feature-badge">
-                  <span className="hero-split__feature-icon">🚌</span>
+                <div className="hero-bg-section__badge">
+                  <span className="hero-bg-section__badge-icon">🚌</span>
                   {lang === 'np' ? 'बस सुविधा' : 'Transportation'}
                 </div>
-                <div className="hero-split__feature-badge">
-                  <span className="hero-split__feature-icon">🧩</span>
-                  {lang === 'np' ? 'मन्टेश्वरी पद्धति' : 'Montेश्वरी Method'}
-                </div>
-              </div>
-            </div>
-            
-            <div className="hero-collage reveal reveal--right">
-              <div className="hero-collage__col">
-                <img src="/images/kids in class.jpeg" alt="Students in Classroom" className="hero-collage__img" style={{ height: '180px' }} />
-                <img src="/images/happy kids.jpeg" alt="Happy Students" className="hero-collage__img" style={{ height: '220px' }} />
-              </div>
-              <div className="hero-collage__col hero-collage__col--pt">
-                <img src="/images/cultural dress.jpg" alt="Cultural Activities" className="hero-collage__img" style={{ height: '240px' }} />
-                <div className="hero-collage__badge">
-                  {t(c.stats[0].value, lang)}
-                  <span>{t(c.stats[0].title, lang)}</span>
+                <div className="hero-bg-section__badge">
+                  <span className="hero-bg-section__badge-icon">🧩</span>
+                  {lang === 'np' ? 'मन्टेश्वरी पद्धति' : 'Montessori Method'}
                 </div>
               </div>
             </div>
@@ -152,7 +167,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===== PROGRAMS ===== */}
+      {/* ===== PROGRAMS WITH IMAGES ===== */}
       <section className="section section--alt">
         <div className="container">
           <div className="section__header reveal">
@@ -161,9 +176,14 @@ export default function HomePage() {
           </div>
           <div className="grid grid--3 stagger reveal">
             {c.programs.items.map((prog, i) => (
-              <div className="program-card" key={i} style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+              <div className="program-card program-card--with-image" key={i} style={{ display: 'flex', flexDirection: 'column', height: '100%' }}>
+                <div className="program-card__image-wrapper">
+                  <img src={programImages[i]} alt={t(prog.title, lang)} className="program-card__image" />
+                  <div className="program-card__image-overlay">
+                    <span className="program-card__level-badge" style={{ background: prog.color }}>{prog.icon} {t(prog.title, lang)}</span>
+                  </div>
+                </div>
                 <div className="program-card__header" style={{ flexGrow: 1 }}>
-                  <div className="program-card__icon">{prog.icon}</div>
                   <h3 className="program-card__title">{t(prog.title, lang)}</h3>
                   <p className="program-card__desc">{t(prog.desc, lang)}</p>
                 </div>
@@ -183,15 +203,43 @@ export default function HomePage() {
         </div>
       </section>
 
-      {/* ===== PRINCIPAL & MANAGER MESSAGES ===== */}
-      <section className="section">
+      {/* ===== FULL MANAGER MESSAGE ===== */}
+      <section className="section" id="manager-message-section">
         <div className="container">
           <div className="section__header reveal">
-            <h2 className="section__title">{lang === 'np' ? 'नेतृत्वको सन्देश' : 'Message from Leadership'}</h2>
+            <h2 className="section__title">{lang === 'np' ? 'व्यवस्थापकको सन्देश' : 'Message from the Manager'}</h2>
           </div>
-          <div className="grid grid--2" style={{ gap: 'var(--space-8)' }}>
-            {/* Principal */}
-            <div className="card reveal reveal--left" style={{ borderTop: '8px solid var(--color-primary)', display: 'flex', flexDirection: 'column', height: '100%' }}>
+          <div className="manager-message-full reveal">
+            <div className="manager-message-full__card">
+              <div className="manager-message-full__image-side">
+                <div className="manager-message-full__photo-frame">
+                  <img src={mc.image} alt={t(mc.name, lang)} className="manager-message-full__photo" />
+                </div>
+                <h3 className="manager-message-full__name">{t(mc.name, lang)}</h3>
+                <p className="manager-message-full__role">{t(mc.role, lang)}</p>
+                <div className="manager-message-full__contact-badge">
+                  <span>📞</span> {content.school.managerPhone}
+                </div>
+              </div>
+              <div className="manager-message-full__content-side">
+                <div className="manager-message-full__quote-icon">❝</div>
+                {(lang === 'np' ? mc.content.np : mc.content.en).map((p, i) => (
+                  <p key={i} className="manager-message-full__paragraph">{p}</p>
+                ))}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== PRINCIPAL MESSAGE PREVIEW ===== */}
+      <section className="section section--alt">
+        <div className="container">
+          <div className="section__header reveal">
+            <h2 className="section__title">{lang === 'np' ? 'प्रधानाध्यापकको सन्देश' : 'Message from the Principal'}</h2>
+          </div>
+          <div className="grid grid--1" style={{ maxWidth: '900px', margin: '0 auto' }}>
+            <div className="card reveal" style={{ borderTop: '8px solid var(--color-primary)', display: 'flex', flexDirection: 'column', height: '100%' }}>
               <div className="card--message-header">
                 <img src={c.principalPreview.image} alt={t(c.principalPreview.name, lang)} className="card--message-avatar" />
                 <div>
@@ -206,23 +254,36 @@ export default function HomePage() {
                 <Link href="/principal-message" className="btn btn--outline btn--sm">{t(c.principalPreview.button, lang)}</Link>
               </div>
             </div>
-            
-            {/* Manager */}
-            <div className="card reveal reveal--right" style={{ borderTop: '8px solid var(--color-accent)', display: 'flex', flexDirection: 'column', height: '100%' }}>
-              <div className="card--message-header">
-                <img src={c.managerPreview.image} alt={t(c.managerPreview.name, lang)} className="card--message-avatar" />
-                <div>
-                  <h3 className="card__title" style={{ margin: 0 }}>{t(c.managerPreview.name, lang)}</h3>
-                  <p style={{ color: 'var(--color-accent-dark)', fontWeight: 600, fontSize: 'var(--text-sm)' }}>{t(c.managerPreview.role, lang)}</p>
+          </div>
+        </div>
+      </section>
+
+      {/* ===== FACILITIES WITH IMAGES ===== */}
+      <section className="section" id="facilities-section">
+        <div className="container">
+          <div className="section__header reveal">
+            <h2 className="section__title">{t(c.facilitiesPreview.title, lang)}</h2>
+            <p className="section__subtitle">{t(c.facilitiesPreview.subtitle, lang)}</p>
+          </div>
+          <div className="grid grid--4 stagger reveal">
+            {c.facilitiesPreview.items.map((item, i) => (
+              <div className="facility-card" key={i}>
+                <div className="facility-card__image-wrapper">
+                  <img
+                    src={facilityImages[i]?.img}
+                    alt={t(item.title, lang)}
+                    className="facility-card__image"
+                  />
+                  <div className="facility-card__icon-overlay">
+                    <span className="facility-card__icon">{item.icon}</span>
+                  </div>
+                </div>
+                <div className="facility-card__content">
+                  <h3 className="facility-card__title">{t(item.title, lang)}</h3>
+                  <p className="facility-card__desc">{t(item.desc, lang)}</p>
                 </div>
               </div>
-              <div style={{ flexGrow: 1 }}>
-                <p className="card--message-quote">"{t(c.managerPreview.preview, lang)}"</p>
-              </div>
-              <div style={{ marginTop: 'var(--space-6)' }}>
-                <Link href="/manager-message" className="btn btn--outline btn--sm">{t(c.managerPreview.button, lang)}</Link>
-              </div>
-            </div>
+            ))}
           </div>
         </div>
       </section>

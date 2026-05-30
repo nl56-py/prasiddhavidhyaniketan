@@ -1,14 +1,22 @@
 'use client';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { supabase } from '@/lib/supabase';
+import { useAuth } from '@/lib/auth-context';
 
 export default function AdminLoginPage() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [loading, setLoading] = useState(false);
+  const { signIn, user, isAdmin, loading: authLoading } = useAuth();
   const router = useRouter();
+
+  // If already logged in as admin, redirect to dashboard
+  useEffect(() => {
+    if (!authLoading && user && isAdmin) {
+      router.push('/admin');
+    }
+  }, [user, isAdmin, authLoading, router]);
 
   const handleLogin = async (e) => {
     e.preventDefault();
@@ -16,14 +24,25 @@ export default function AdminLoginPage() {
     setError('');
 
     try {
-      const { data, error: authError } = await supabase.auth.signInWithPassword({ email, password });
-      if (authError) throw authError;
+      await signIn(email, password);
       router.push('/admin');
     } catch (err) {
       setError(err.message || 'Invalid credentials. Please try again.');
     }
     setLoading(false);
   };
+
+  // Don't show login form if already authenticated
+  if (authLoading) {
+    return (
+      <div className="admin-login">
+        <div style={{ color: 'white', fontSize: '1.5rem', display: 'flex', alignItems: 'center', gap: '0.75rem' }}>
+          <span className="admin-spinner" />
+          Checking authentication...
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="admin-login">

@@ -25,6 +25,7 @@ if (isDummy) {
 
   supabase = {
     from: () => noopQuery(),
+    rpc: () => Promise.resolve(noopResponse),
     auth: {
       getSession: () => Promise.resolve({ data: { session: null } }),
       signInWithPassword: () => Promise.resolve({ data: null, error: { message: 'Supabase not configured' } }),
